@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import '../App.css'
 
 function DonorDashboard() {
   const [user, setUser] = useState(null)
@@ -202,22 +203,35 @@ function DonorDashboard() {
   }
 
   if (loading) {
-    return <div className="dashboard-page"><p>Loading dashboard...</p></div>
+    return (
+      <div className="dashboard-page donor-dashboard">
+        <div className="donor-loading">
+          <div className="donor-loading-icon">❤️</div>
+          <p>Preparing your dashboard...</p>
+        </div>
+      </div>
+    )
   }
 
   if (!user) {
     return (
-      <div className="dashboard-page">
-        <p>{errorMessage || 'Unable to load your profile.'}</p>
-        <button onClick={handleLogout}>Back to Login</button>
+      <div className="dashboard-page donor-dashboard">
+        <div className="donor-loading">
+          <p>{errorMessage || 'Unable to load your profile.'}</p>
+          <button onClick={handleLogout}>Back to Login</button>
+        </div>
       </div>
     )
   }
 
   return (
     <div className="dashboard-page donor-dashboard">
-      <header className="dashboard-header">
-        <h1>RaktConnect<span>.</span></h1>
+
+      <header className="dashboard-header donor-header">
+        <Link to="/" className="donor-brand">
+          RaktConnect<span>.</span>
+        </Link>
+
         <nav>
           <Link to="/">Home</Link>
           <Link to="/donor-profile">My Profile</Link>
@@ -226,70 +240,113 @@ function DonorDashboard() {
         </nav>
       </header>
 
-      <main className="dashboard-content">
-        <section className="welcome-section">
-          <p className="section-label">DONOR DASHBOARD</p>
-          <h1>Welcome, {user.fullName}!</h1>
-          <p>Your willingness to help can make a difference.</p>
+      <main className="dashboard-content donor-main">
+
+        <section className="donor-welcome-banner">
+          <div className="donor-welcome-content">
+            <p className="section-label">✦ DONOR DASHBOARD</p>
+            <h1>
+              Welcome back,
+              <span> {user.fullName}!</span>
+            </h1>
+            <p>
+              Your willingness to help can make a meaningful
+              difference in someone's life.
+            </p>
+          </div>
+
+          <div className="donor-welcome-decoration">
+            <span>❤️</span>
+            <p>Every drop counts</p>
+          </div>
         </section>
 
         {successMessage && (
-          <div className="dashboard-alert success-alert">{successMessage}</div>
+          <div className="dashboard-alert success-alert">
+            ✓ {successMessage}
+          </div>
         )}
 
         {errorMessage && (
-          <div className="dashboard-alert error-alert">{errorMessage}</div>
+          <div className="dashboard-alert error-alert">
+            {errorMessage}
+          </div>
         )}
 
         <section className="donor-info-grid">
+
           <div className="donor-info-card blood-info">
+            <div className="donor-card-icon">🩸</div>
             <span>YOUR BLOOD GROUP</span>
             <strong>{user.bloodGroup || 'Not Set'}</strong>
+            <p>Your registered blood group</p>
           </div>
 
-          <div className="donor-info-card">
+          <div className="donor-info-card location-info">
+            <div className="donor-card-icon">⌖</div>
             <span>YOUR LOCATION</span>
             <strong>{user.location || 'Not Set'}</strong>
+            <p>Your registered area</p>
           </div>
 
-          <div className="donor-info-card">
+          <div className="donor-info-card availability-info">
+            <div className="donor-card-icon">✦</div>
             <span>AVAILABILITY</span>
             <strong>{user.availability || 'Not Set'}</strong>
+            <p>Your current donor status</p>
           </div>
+
         </section>
 
-        <section className="donor-status availability-section">
-          <div>
+        <section className="donor-status availability-section donor-availability-panel">
+          <div className="availability-copy">
+            <p className="section-label">YOUR DONOR STATUS</p>
             <h2>Manage Availability</h2>
-            <p>Update your status so requesters know whether you are available.</p>
+            <p>
+              Keep your availability updated so requesters
+              know whether you are currently available.
+            </p>
           </div>
 
-          <select
-            value={user.availability}
-            onChange={handleAvailabilityChange}
-            disabled={updating}
-          >
-            <option value="Active">Active</option>
-            <option value="Temporarily Unavailable">Temporarily Unavailable</option>
-            <option value="Inactive">Inactive</option>
-          </select>
+          <div className="availability-control">
+            <label>Current Availability</label>
+            <select
+              value={user.availability}
+              onChange={handleAvailabilityChange}
+              disabled={updating}
+            >
+              <option value="Active">Active</option>
+              <option value="Temporarily Unavailable">
+                Temporarily Unavailable
+              </option>
+              <option value="Inactive">Inactive</option>
+            </select>
 
-          {updating && <p>Updating...</p>}
+            {updating && <p>Updating your status...</p>}
+          </div>
         </section>
 
-        <section className="donor-status">
+        <section className="donor-status donor-request-section">
+
           <div className="section-heading">
             <div>
-              <p className="section-label">ACTION REQUIRED</p>
+              <p className="section-label">✦ ACTION REQUIRED</p>
               <h2>Incoming Blood Requests</h2>
+              <p>Review requests that match your donor profile.</p>
             </div>
-            <span className="request-count">{incomingRequests.length} requests</span>
+
+            <span className="request-count">
+              {incomingRequests.length} requests
+            </span>
           </div>
 
-          {requestLoading && <p>Loading requests...</p>}
+          {requestLoading && (
+            <p className="donor-section-loading">Loading requests...</p>
+          )}
 
           {!requestLoading && incomingRequests.length === 0 && (
-            <div className="dashboard-empty">
+            <div className="dashboard-empty donor-empty">
+              <div className="donor-empty-icon">♡</div>
               <h3>No new requests</h3>
               <p>No matching approved requests are currently available.</p>
             </div>
@@ -298,21 +355,32 @@ function DonorDashboard() {
           <div className="donor-request-grid">
             {incomingRequests.map(request => (
               <div key={request._id} className="dashboard-card donor-request-card">
-                <span className="request-urgency">{request.urgency}</span>
+
+                <div className="donor-request-card-heading">
+                  <span className="request-urgency">{request.urgency}</span>
+                  <span className="donor-request-type">New Request</span>
+                </div>
+
                 <h3>{request.bloodGroup} Blood Required</h3>
-                <p><strong>Patient:</strong> {request.patientName}</p>
-                <p><strong>Component:</strong> {request.bloodComponent}</p>
-                <p><strong>Units:</strong> {request.units}</p>
-                <p><strong>Hospital:</strong> {request.hospitalName}</p>
-                <p><strong>Location:</strong> {request.hospitalLocation}</p>
-                <p><strong>Required Date:</strong> {new Date(request.requiredDate).toLocaleDateString()}</p>
+
+                <div className="donor-request-details">
+                  <p><span>Patient</span><strong>{request.patientName}</strong></p>
+                  <p><span>Component</span><strong>{request.bloodComponent}</strong></p>
+                  <p><span>Units</span><strong>{request.units}</strong></p>
+                  <p><span>Hospital</span><strong>{request.hospitalName}</strong></p>
+                  <p><span>Location</span><strong>{request.hospitalLocation}</strong></p>
+                  <p>
+                    <span>Required Date</span>
+                    <strong>{new Date(request.requiredDate).toLocaleDateString()}</strong>
+                  </p>
+                </div>
 
                 <div className="request-actions">
                   <button
                     className="accept-btn"
                     onClick={() => handleRequestResponse(request._id, 'Accepted')}
                   >
-                    Accept
+                    ✓ Accept
                   </button>
 
                   <button
@@ -322,24 +390,33 @@ function DonorDashboard() {
                     Decline
                   </button>
                 </div>
+
               </div>
             ))}
           </div>
         </section>
 
-        <section className="donor-status">
+        <section className="donor-status donor-request-section">
+
           <div className="section-heading">
             <div>
-              <p className="section-label">YOUR ACTIVITY</p>
+              <p className="section-label">✦ YOUR ACTIVITY</p>
               <h2>My Accepted Requests</h2>
+              <p>Keep track of the requests you have accepted.</p>
             </div>
-            <span className="request-count">{acceptedRequests.length} accepted</span>
+
+            <span className="request-count accepted-count">
+              {acceptedRequests.length} accepted
+            </span>
           </div>
 
-          {requestLoading && <p>Loading accepted requests...</p>}
+          {requestLoading && (
+            <p className="donor-section-loading">Loading accepted requests...</p>
+          )}
 
           {!requestLoading && acceptedRequests.length === 0 && (
-            <div className="dashboard-empty">
+            <div className="dashboard-empty donor-empty">
+              <div className="donor-empty-icon">♡</div>
               <h3>No accepted requests yet</h3>
               <p>Requests you accept will appear here.</p>
             </div>
@@ -348,21 +425,31 @@ function DonorDashboard() {
           <div className="donor-request-grid">
             {acceptedRequests.map(request => (
               <div key={request._id} className="dashboard-card donor-request-card">
-                <span className="accepted-label">Accepted Request</span>
-                <h3>{request.bloodGroup} Blood Request</h3>
-                <p><strong>Patient:</strong> {request.patientName}</p>
-                <p><strong>Hospital:</strong> {request.hospitalName}</p>
-                <p><strong>Location:</strong> {request.hospitalLocation}</p>
-                <p><strong>Required Date:</strong> {new Date(request.requiredDate).toLocaleDateString()}</p>
 
-                <h4>Donation Confirmation</h4>
+                <div className="donor-request-card-heading">
+                  <span className="accepted-label">✓ Accepted Request</span>
+                </div>
+
+                <h3>{request.bloodGroup} Blood Request</h3>
+
+                <div className="donor-request-details">
+                  <p><span>Patient</span><strong>{request.patientName}</strong></p>
+                  <p><span>Hospital</span><strong>{request.hospitalName}</strong></p>
+                  <p><span>Location</span><strong>{request.hospitalLocation}</strong></p>
+                  <p>
+                    <span>Required Date</span>
+                    <strong>{new Date(request.requiredDate).toLocaleDateString()}</strong>
+                  </p>
+                </div>
+
+                <h4 className="confirmation-heading">Donation Confirmation</h4>
 
                 <div className="request-actions">
                   <button
                     className="accept-btn"
                     onClick={() => handleDonationConfirmation(request._id, 'Donation Completed')}
                   >
-                    Donation Completed
+                    ✓ Donation Completed
                   </button>
 
                   <button
@@ -372,30 +459,42 @@ function DonorDashboard() {
                     Did Not Occur
                   </button>
                 </div>
+
               </div>
             ))}
           </div>
         </section>
 
-        <section className="dashboard-cards">
-          <div className="dashboard-card">
-            <h3>My Profile</h3>
-            <p>Manage your donor information.</p>
-            <Link to="/donor-profile">View Profile →</Link>
+        <section className="donor-quick-links">
+          <div className="donor-quick-heading">
+            <p className="section-label">✦ QUICK ACCESS</p>
+            <h2>Your RaktConnect Space</h2>
           </div>
 
-          <div className="dashboard-card">
-            <h3>Blood Requests</h3>
-            <p>Check your request activity.</p>
-            <Link to="/my-requests">View Requests →</Link>
-          </div>
+          <div className="dashboard-cards">
+            <div className="dashboard-card donor-quick-card">
+              <div className="quick-card-icon">♙</div>
+              <h3>My Profile</h3>
+              <p>Manage your donor information and personal details.</p>
+              <Link to="/donor-profile">View Profile →</Link>
+            </div>
 
-          <div className="dashboard-card">
-            <h3>Messages</h3>
-            <p>Communicate with requesters.</p>
-            <Link to="/messages">Open Messages →</Link>
+            <div className="dashboard-card donor-quick-card">
+              <div className="quick-card-icon">♡</div>
+              <h3>Blood Requests</h3>
+              <p>Keep track of your blood request activity.</p>
+              <Link to="/my-requests">View Requests →</Link>
+            </div>
+
+            <div className="dashboard-card donor-quick-card">
+              <div className="quick-card-icon">✉</div>
+              <h3>Messages</h3>
+              <p>Stay connected and communicate with requesters.</p>
+              <Link to="/messages">Open Messages →</Link>
+            </div>
           </div>
         </section>
+
       </main>
     </div>
   )

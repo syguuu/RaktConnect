@@ -1,6 +1,7 @@
 
 import '../App.css'
 import { Link } from 'react-router-dom'
+import heroImage from '../assets/raktconnect-hero.png'
 
 function Home() {
   return (
@@ -23,6 +24,7 @@ function Home() {
       </nav>
 
       <section className="hero" id="home">
+
         <div className="hero-content">
           <p className="tagline">❤️ EVERY DROP COUNTS</p>
 
@@ -41,6 +43,7 @@ function Home() {
             <Link to="/register" className="hero-btn">
               Join RaktConnect →
             </Link>
+
             <Link to="/login" className="hero-secondary-btn">
               Login to your account
             </Link>
@@ -51,56 +54,102 @@ function Home() {
           </p>
         </div>
 
-        <div className="hero-image">
-          <div className="blood-symbol">+</div>
-          <h2>Be someone's hope.</h2>
-          <p>A connection today can make a difference tomorrow.</p>
-          <div className="hero-decoration">RAKTCONNECT</div>
+        <div className="hero-banner">
+          <img
+            src={heroImage}
+            alt="RaktConnect blood donation illustration"
+          />
         </div>
+
+        <div className="hero-highlight">
+          <span>❤️</span>
+          <p>One community. One connection. A difference that matters.</p>
+        </div>
+
       </section>
 
       <section className="about" id="about">
-        <p className="section-label">ABOUT RAKTCONNECT</p>
-        <h2>Bringing donors and requesters together.</h2>
+        <p className="section-label">✦ ABOUT RAKTCONNECT</p>
+
+        <h2>
+          Bringing donors and <span>requesters together.</span>
+        </h2>
+
         <p>
           RaktConnect is a blood donor coordination platform that
           helps requesters find potential donors based on blood
           group and location. It also provides tools to manage
           requests, communicate and coordinate donation confirmations.
         </p>
+
+        <div className="about-points">
+          <div>
+            <span>01</span>
+            <h3>Find donors</h3>
+            <p>Discover potential donors by blood group and location.</p>
+          </div>
+
+          <div>
+            <span>02</span>
+            <h3>Stay connected</h3>
+            <p>Communicate and coordinate through one platform.</p>
+          </div>
+
+          <div>
+            <span>03</span>
+            <h3>Manage requests</h3>
+            <p>Keep track of requests and donation confirmations.</p>
+          </div>
+        </div>
       </section>
 
       <section className="how-it-works" id="how-it-works">
-        <p className="section-label">SIMPLE. CONNECTED. ACCESSIBLE.</p>
+        <p className="section-label">✦ SIMPLE. CONNECTED. ACCESSIBLE.</p>
+
         <h2>How RaktConnect works</h2>
+
         <p className="steps-description">
           A simple process designed to make donor coordination easier.
         </p>
 
         <div className="steps">
+
           <div className="step-card">
             <h3>01</h3>
             <h4>Create an account</h4>
-            <p>Register as a donor or requester to access the platform.</p>
+            <p>
+              Register as a donor or requester to access the platform.
+            </p>
           </div>
 
           <div className="step-card">
             <h3>02</h3>
             <h4>Find and connect</h4>
-            <p>Search for potential donors using blood group and location.</p>
+            <p>
+              Search for potential donors using blood group and location.
+            </p>
           </div>
 
           <div className="step-card">
             <h3>03</h3>
             <h4>Coordinate requests</h4>
-            <p>Manage requests, communicate and track confirmations.</p>
+            <p>
+              Manage requests, communicate and track confirmations.
+            </p>
           </div>
+
         </div>
       </section>
 
       <section className="home-cta">
+        <p className="cta-label">BE THE REASON SOMEONE GETS HELP</p>
+
         <h2>Be a part of the connection.</h2>
-        <p>Join RaktConnect and help make donor coordination simpler.</p>
+
+        <p>
+          Join RaktConnect and help make donor coordination simpler.
+        </p>
+
         <Link to="/register" className="hero-btn">
           Get Started →
         </Link>
@@ -108,7 +157,9 @@ function Home() {
 
       <footer id="contact">
         <h2>RaktConnect<span>.</span></h2>
+
         <p>Connecting people. Supporting communities.</p>
+
         <p>© 2026 RaktConnect. All rights reserved.</p>
       </footer>
 

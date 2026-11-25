@@ -1,6 +1,7 @@
 
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import '../App.css'
 
 function SearchDonors() {
   const navigate = useNavigate()
@@ -67,8 +68,11 @@ function SearchDonors() {
 
   return (
     <div className="dashboard-page search-donors-page">
-      <header className="dashboard-header">
-        <h1>RaktConnect<span>.</span></h1>
+
+      <header className="dashboard-header search-header">
+        <Link to="/requester-dashboard" className="search-brand">
+          RaktConnect<span>.</span>
+        </Link>
 
         <nav>
           <Link to="/requester-dashboard">Dashboard</Link>
@@ -78,26 +82,41 @@ function SearchDonors() {
         </nav>
       </header>
 
-      <main className="dashboard-content">
-        <section className="welcome-section">
-          <p className="section-label">CONNECT WITH DONORS</p>
-          <h1>Find Blood Donors</h1>
-          <p>
-            Search for potential donors by blood group and location.
-          </p>
+      <main className="dashboard-content search-main">
+
+        <section className="search-hero">
+          <div className="search-hero-content">
+            <p className="section-label">❤️ THE DONOR COMMUNITY</p>
+            <h1>
+              Find a donor.
+              <span> Make a connection.</span>
+            </h1>
+            <p>
+              Search for potential blood donors by blood group
+              and location. Every connection can make a difference.
+            </p>
+          </div>
+
+          <div className="search-hero-decoration">
+            <div className="search-hero-circle">+</div>
+            <span>Every drop counts</span>
+          </div>
         </section>
 
         <section className="donor-search-panel">
+
           <div className="search-heading">
             <div>
               <p className="section-label">DONOR DIRECTORY</p>
-              <h2>Search for Donors</h2>
+              <h2>Find potential donors</h2>
               <p>Enter the details of the blood group you need.</p>
             </div>
+
             <div className="search-symbol">⌕</div>
           </div>
 
           <form onSubmit={handleSearch} className="donor-search-form">
+
             <div className="search-field">
               <label>Required Blood Group</label>
               <select
@@ -139,41 +158,61 @@ function SearchDonors() {
               />
             </div>
 
-            <button type="submit" disabled={loading} className="donor-search-button">
+            <button
+              type="submit"
+              disabled={loading}
+              className="donor-search-button"
+            >
               {loading ? 'Searching...' : '⌕  Search Donors'}
             </button>
+
           </form>
 
           {error && <p className="error-alert">{error}</p>}
+
         </section>
 
         {searched && (
           <section className="donor-results-section">
+
             <div className="results-heading">
               <div>
                 <p className="section-label">MATCHING PROFILES</p>
                 <h2>Search Results</h2>
+                <p>Potential donors matching your search.</p>
               </div>
-              <span className="results-count">{donors.length} Found</span>
+
+              <span className="results-count">
+                {donors.length} Found
+              </span>
             </div>
 
             {donors.length === 0 ? (
-              <div className="dashboard-empty">
+              <div className="dashboard-empty search-empty">
+                <div className="search-empty-icon">⌕</div>
                 <h3>No donors found</h3>
-                <p>Try changing the location or searching another blood group.</p>
+                <p>
+                  Try changing the location or searching another blood group.
+                </p>
               </div>
             ) : (
               <div className="donor-results-grid">
+
                 {donors.map((donor) => (
                   <div key={donor._id} className="donor-result-card">
+
                     <div className="donor-result-top">
                       <div className="donor-avatar">
                         {donor.fullName?.charAt(0)?.toUpperCase()}
                       </div>
-                      <div>
+
+                      <div className="donor-result-identity">
                         <h3>{donor.fullName}</h3>
-                        <p>{donor.location || 'Location not provided'}</p>
+                        <p>
+                          <span>⌖</span> {donor.location || 'Location not provided'}
+                        </p>
                       </div>
+
                       <span className="blood-group-badge">
                         {donor.bloodGroup}
                       </span>
@@ -184,17 +223,21 @@ function SearchDonors() {
                         <span>PIN Code</span>
                         <strong>{donor.pinCode || 'Not provided'}</strong>
                       </p>
+
                       <p>
                         <span>Availability</span>
                         <strong>{donor.availability || 'Not specified'}</strong>
                       </p>
+
                       <p>
                         <span>Review Status</span>
                         <strong>{donor.verificationStatus || 'Pending'}</strong>
                       </p>
                     </div>
+
                   </div>
                 ))}
+
               </div>
             )}
 
@@ -204,8 +247,10 @@ function SearchDonors() {
               Donation arrangements and eligibility must be confirmed
               through the hospital or blood bank.
             </p>
+
           </section>
         )}
+
       </main>
     </div>
   )

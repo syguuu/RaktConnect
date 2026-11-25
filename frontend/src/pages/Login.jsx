@@ -1,6 +1,7 @@
 
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import '../App.css'
 
 function Login() {
   const [email, setEmail] = useState('')
@@ -38,11 +39,9 @@ function Login() {
         throw new Error(data.message || 'Login failed.')
       }
 
-      // Save login information for this browser session
       sessionStorage.setItem('token', data.token)
       sessionStorage.setItem('user', JSON.stringify(data.user))
 
-      // Redirect according to account role
       if (data.user.role === 'donor') {
         navigate('/donor-dashboard')
       } else if (data.user.role === 'requester') {
@@ -62,59 +61,120 @@ function Login() {
 
   return (
     <div className="login-page">
-      <h1>Welcome Back!</h1>
-      <p>Login to your RaktConnect account.</p>
 
-      <form onSubmit={handleSubmit} autoComplete="on">
-        <label>Email Address</label>
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter your email"
-          autoComplete="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+      <div className="login-left">
+        <Link to="/" className="login-brand">
+          RaktConnect<span>.</span>
+        </Link>
 
-        <label>Password</label>
-        <input
-          type={showPassword ? 'text' : 'password'}
-          name="password"
-          placeholder="Enter your password"
-          autoComplete="current-password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <div className="login-left-content">
+          <div className="login-heart">❤️</div>
 
-        <label>
-          <input
-            type="checkbox"
-            checked={showPassword}
-            onChange={(e) => setShowPassword(e.target.checked)}
-          />
-          Show Password
-        </label>
+          <p className="login-eyebrow">EVERY DROP COUNTS</p>
 
-        {errorMessage && (
-          <p style={{ color: 'red', marginTop: '15px' }}>
-            {errorMessage}
+          <h1>
+            Welcome to a community that <span>cares.</span>
+          </h1>
+
+          <p>
+            Connecting blood donors and people in need,
+            one meaningful connection at a time.
           </p>
-        )}
 
-        <button type="submit" disabled={loading}>
-          {loading ? 'Logging in...' : 'Login'}
-        </button>
+          <div className="login-quote">
+            "Together, we can make every connection count."
+          </div>
+        </div>
 
-        <p style={{ marginTop: '20px', textAlign: 'center' }}>
-          Don't have an account? <Link to="/register">Register here</Link>
+        <p className="login-left-footer">
+          Connecting people. Supporting communities.
         </p>
-      </form>
+      </div>
 
-      <p style={{ marginTop: '20px' }}>
-        <Link to="/">Back to Home</Link>
-      </p>
+      <div className="login-right">
+
+        <div className="login-top-link">
+          <Link to="/">← Back to Home</Link>
+        </div>
+
+        <div className="login-form-container">
+
+          <div className="login-form-icon">✦</div>
+
+          <p className="login-form-label">WELCOME BACK</p>
+
+          <h2>Login to your account</h2>
+
+          <p className="login-form-description">
+            We're glad to have you back. Enter your details below.
+          </p>
+
+          <form onSubmit={handleSubmit} autoComplete="on">
+
+            <div className="login-field">
+              <label>Email Address</label>
+
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="login-field">
+              <label>Password</label>
+
+              <input
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                placeholder="Enter your password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <label className="login-show-password">
+              <input
+                type="checkbox"
+                checked={showPassword}
+                onChange={(e) => setShowPassword(e.target.checked)}
+              />
+              Show Password
+            </label>
+
+            {errorMessage && (
+              <p className="login-error">
+                {errorMessage}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              className="login-submit-btn"
+              disabled={loading}
+            >
+              {loading ? 'Logging in...' : 'Login to RaktConnect →'}
+            </button>
+
+            <p className="login-register-text">
+              Don't have an account?{' '}
+              <Link to="/register">Create one</Link>
+            </p>
+
+          </form>
+        </div>
+
+        <p className="login-bottom-note">
+          Made for connections that matter ❤️
+        </p>
+
+      </div>
     </div>
   )
 }
