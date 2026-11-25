@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { API_URL } from '../config'
 
 function DonorProfile() {
   const [isEditing, setIsEditing] = useState(false)
@@ -23,7 +24,7 @@ function DonorProfile() {
 
       try {
         const response = await fetch(
-          'http://localhost:5000/api/users/me',
+          `${API_URL}/users/me`,
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -82,7 +83,7 @@ function DonorProfile() {
 
     try {
       const response = await fetch(
-        'http://localhost:5000/api/users/profile',
+        `${API_URL}/users/profile`,
         {
           method: 'PATCH',
           headers: {

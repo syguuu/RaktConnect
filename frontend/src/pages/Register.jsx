@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../App.css'
+import { API_URL } from '../config'
 
 function Register() {
   const [role, setRole] = useState('')
@@ -41,7 +42,7 @@ function Register() {
 
     try {
       const response = await fetch(
-        'http://localhost:5000/api/auth/register',
+         `${API_URL}/auth/register`,
         {
           method: 'POST',
           headers: {

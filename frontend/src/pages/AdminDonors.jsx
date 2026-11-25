@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { API_URL } from '../config'
 
 function AdminDonors() {
   const navigate = useNavigate()
@@ -24,7 +25,7 @@ function AdminDonors() {
 
     try {
       const response = await fetch(
-        'http://localhost:5000/api/users/admin/donors',
+        `${API_URL}/users/admin/donors`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -55,7 +56,7 @@ function AdminDonors() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/users/admin/${donorId}/verification`,
+        `${API_URL}/users/admin/${donorId}/verification`,
         {
           method: 'PATCH',
           headers: {

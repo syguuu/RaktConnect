@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { io } from 'socket.io-client'
+import { API_URL, SOCKET_URL } from '../config'
 
 function Messages() {
   const [conversations, setConversations] = useState([])
@@ -29,7 +30,7 @@ function Messages() {
     async function fetchConversations() {
       try {
         const response = await fetch(
-          'http://localhost:5000/api/chat/conversations',
+          `${API_URL}/chat/conversations`,
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -57,7 +58,7 @@ function Messages() {
   useEffect(() => {
     if (!token) return
 
-    const socket = io('http://localhost:5000', {
+    const socket = io(SOCKET_URL, {
       auth: { token }
     })
 
@@ -95,7 +96,7 @@ function Messages() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/chat/${conversation.bloodRequestId}/${conversation.otherUserId}`,
+        `${API_URL}/chat/${conversation.bloodRequestId}/${conversation.otherUserId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -134,7 +135,7 @@ function Messages() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/chat/${selectedConversation.bloodRequestId}/${selectedConversation.otherUserId}`,
+        `${API_URL}/chat/${selectedConversation.bloodRequestId}/${selectedConversation.otherUserId}`,
         {
           method: 'POST',
           headers: {

@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { API_URL } from '../config'
 
 function MyRequests() {
   const [requests, setRequests] = useState([])
@@ -21,7 +22,7 @@ function MyRequests() {
 
     try {
       const response = await fetch(
-        'http://localhost:5000/api/requests/my-requests',
+        `${API_URL}/requests/my-requests`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -64,7 +65,7 @@ function MyRequests() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/requests/requester/${requestId}/confirmation`,
+        `${API_URL}/requests/requester/${requestId}/confirmation`,
         {
           method: 'PATCH',
           headers: {

@@ -2,6 +2,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import '../App.css'
+import { API_URL } from '../config'
 
 function SearchDonors() {
   const navigate = useNavigate()
@@ -37,7 +38,7 @@ function SearchDonors() {
       if (pinCode.trim()) params.append('pinCode', pinCode.trim())
 
       const response = await fetch(
-        `http://localhost:5000/api/users/search?${params.toString()}`,
+        `${API_URL}/users/search?${params.toString()}`,
         {
           headers: {
             Authorization: `Bearer ${token}`

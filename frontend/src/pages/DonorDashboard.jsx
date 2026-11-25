@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import '../App.css'
+import { API_URL } from '../config'
 
 function DonorDashboard() {
   const [user, setUser] = useState(null)
@@ -19,7 +20,7 @@ function DonorDashboard() {
   async function fetchAcceptedRequests() {
     try {
       const response = await fetch(
-        'http://localhost:5000/api/requests/donor/accepted',
+        `${API_URL}/requests/donor/accepted`,
         { headers: { Authorization: `Bearer ${token}` } }
       )
 
@@ -38,7 +39,7 @@ function DonorDashboard() {
   useEffect(() => {
     async function fetchDashboard() {
       try {
-        const response = await fetch('http://localhost:5000/api/users/me', {
+        const response = await fetch(`${API_URL}/users/me`, {
           headers: { Authorization: `Bearer ${token}` }
         })
 
@@ -68,7 +69,7 @@ function DonorDashboard() {
     async function fetchRequests() {
       try {
         const response = await fetch(
-          'http://localhost:5000/api/requests/donor/incoming',
+          `${API_URL}/requests/donor/incoming`,
           { headers: { Authorization: `Bearer ${token}` } }
         )
 
@@ -98,7 +99,7 @@ function DonorDashboard() {
 
     try {
       const response = await fetch(
-        'http://localhost:5000/api/users/availability',
+        `${API_URL}/users/availability`,
         {
           method: 'PATCH',
           headers: {
@@ -131,7 +132,7 @@ function DonorDashboard() {
   async function handleRequestResponse(requestId, responseType) {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/requests/donor/${requestId}/respond`,
+        `${API_URL}/requests/donor/${requestId}/respond`,
         {
           method: 'PATCH',
           headers: {
@@ -172,7 +173,7 @@ function DonorDashboard() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/requests/donor/${requestId}/confirmation`,
+        `${API_URL}/requests/donor/${requestId}/confirmation`,
         {
           method: 'PATCH',
           headers: {

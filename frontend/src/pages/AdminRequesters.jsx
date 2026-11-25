@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { API_URL } from '../config'
 
 function AdminRequesters() {
   const [requesters, setRequesters] = useState([])
@@ -21,7 +22,7 @@ function AdminRequesters() {
 
       try {
         const response = await fetch(
-          'http://localhost:5000/api/users/admin/requesters',
+          `${API_URL}/users/admin/requesters`,
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -58,7 +59,7 @@ function AdminRequesters() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/users/admin/requesters/${requesterId}/verification`,
+        `${API_URL}/users/admin/requesters/${requesterId}/verification`,
         {
           method: 'PATCH',
           headers: {

@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { API_URL } from '../config'
 
 function AdminRequests() {
   const [requests, setRequests] = useState([])
@@ -22,7 +23,7 @@ function AdminRequests() {
 
       try {
         const response = await fetch(
-          'http://localhost:5000/api/requests/admin/all',
+          `${API_URL}/requests/admin/all`,
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -68,7 +69,7 @@ function AdminRequests() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/requests/admin/${requestId}/status`,
+        `${API_URL}/requests/admin/${requestId}/status`,
         {
           method: 'PATCH',
           headers: {

@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { API_URL } from '../config'
 
 function RequesterDashboard() {
   const [user, setUser] = useState(null)
@@ -19,7 +20,7 @@ function RequesterDashboard() {
       }
 
       try {
-        const response = await fetch('http://localhost:5000/api/users/me', {
+        const response = await fetch(`${API_URL}/users/me`, {
           headers: { Authorization: `Bearer ${token}` }
         })
 
